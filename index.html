@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專題一：AI 技術滲透率對台灣實質薪資抗通膨能力的非對稱衝擊</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans TC', 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-slate-900 text-white border-b border-slate-800">
+        <div class="max-w-7xl mx-out p-6 sm:p-10 mx-auto">
+            <div class="inline-block bg-indigo-600 text-indigo-100 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-3">
+                總體經濟與產業研究專題
+            </div>
+            <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white mb-3">
+                專題一：AI 技術滲透率對台灣實質薪資抗通膨能力的非對稱衝擊
+            </h1>
+            <p class="text-slate-400 text-base sm:text-lg max-w-3xl leading-relaxed">
+                探討高低 AI 滲透率產業在通膨時期（2021–2023）的名目薪資調整彈性與實質薪資非對稱侵蝕現象。
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+        <!-- 1. 研究假說 (Hypothesis) -->
+        <section class="space-y-6">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3">
+                <div class="bg-indigo-600 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold">1</div>
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900">研究假說 (Hypothesis)</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- H0 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:border-slate-300 transition-all">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <span class="bg-slate-100 text-slate-700 text-sm font-bold px-3 py-1 rounded-md">H₀ 虛無假說</span>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        AI 技術的導入對各行業名目薪資應對 CPI 年增率的轉嫁能力<strong class="text-slate-900">沒有顯著影響</strong>。
+                    </p>
+                </div>
+
+                <!-- H1 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-indigo-200 hover:border-indigo-300 transition-all relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-indigo-600"></div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <span class="bg-indigo-50 text-indigo-700 text-sm font-bold px-3 py-1 rounded-md">H₁ 對立假說</span>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        AI 技術滲透率較高的行業，其勞工（如高技能知識工作者）名目薪資對 CPI 的調整彈性<strong class="text-indigo-600">顯著高於</strong> AI 滲透率低的行業（如替代性高的常規勞務），導致實質薪資在通膨時期出現<strong class="text-slate-900">「非對稱侵蝕」</strong>現象。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 經濟學理傳導機制 -->
+        <section class="space-y-6">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3">
+                <div class="bg-indigo-600 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold">2</div>
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900">經濟學理傳導機制</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- 生產力提升效應 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <div class="flex items-center space-x-3 mb-4 text-indigo-600">
+                        <i class="fa-solid fa-chart-line text-xl"></i>
+                        <h3 class="text-lg font-bold text-slate-900">生產力提升效應 (Productivity Effect)</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-4">
+                        AI 導入提升了高技能勞工的邊際產出（Marginal Product of Labor, \(MP_L\)），賦予其更強的薪資議價能力（Bargaining Power）。
+                    </p>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-center">
+                        <span class="text-sm font-mono text-slate-700">
+                            \( W = P \times MP_L \quad \implies \quad \uparrow MP_L \implies \uparrow Bargaining\ Power \)
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-3">
+                        結果：名目薪資能迅速追上甚至超越 CPI 的漲幅，維持或提升實質購買力。
+                    </p>
+                </div>
+
+                <!-- 替代效應 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <div class="flex items-center space-x-3 mb-4 text-rose-600">
+                        <i class="fa-solid fa-arrow-down-left-and-up-right-to-center text-xl"></i>
+                        <h3 class="text-lg font-bold text-slate-900">替代效應 (Substitution Effect)</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-4">
+                        低 AI 滲透率或易被 AI 替代的傳統常規職位，勞工面臨技術失業風險，議價能力低落。名目薪資具有向上黏性（Wage Rigidity）。
+                    </p>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-center">
+                        <span class="text-sm font-mono text-slate-700">
+                            \( Real\ Wage = \frac{W_{Nominal}}{CPI} \quad \implies \quad W_{Nominal}\ \text{黏性} \implies \downarrow Real\ Wage \)
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-3">
+                        結果：當 CPI 上漲時，名目薪資調幅微弱，導致實質薪資被通膨嚴重侵蝕。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 建議數據視覺化圖表 -->
+        <section class="space-y-6">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3">
+                <div class="bg-indigo-600 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold">3</div>
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900">數據視覺化分析</h2>
+            </div>
+
+            <!-- 分組雙 Y 軸折線圖 -->
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+                <div>
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-1">
+                        高/低 AI 滲透率產業名目薪資成長率與 CPI 年增率對比
+                    </h3>
+                    <p class="text-slate-500 text-sm">
+                        觀察 2021–2023 年通膨高漲期，高 AI 滲透率與低 AI 滲透率產業名目薪資追趕通膨的速度差異。
+                    </p>
+                </div>
+
+                <div class="relative h-72 sm:h-96 w-full">
+                    <canvas id="dualYAxisChart"></canvas>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs sm:text-sm text-slate-600">
+                    <span class="font-bold text-slate-800"><i class="fa-solid fa-circle-info mr-1"></i>視覺分析重點：</span>
+                    高 AI 滲透率產業（藍線）名目薪資年增率全程保持在 CPI 年增率（灰色柱狀）上方；相反地，低 AI 滲透率產業（紅線）在 2021–2023 年通膨高峰期持續落後於 CPI 年增率，形成「實質薪資負增長」區域。
+                </div>
+            </div>
+
+            <!-- 行業別熱力圖示意 -->
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+                <div>
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-1">
+                        各細分行業實質薪資成長率熱力圖 (Real Wage Growth Rate Heatmap)
+                    </h3>
+                    <p class="text-slate-500 text-sm">
+                        計算方式：實質薪資成長率 = 名目薪資成長率 - CPI 年增率。深綠代表實質薪資成長，深紅代表遭通膨侵蝕。
+                    </p>
+                </div>
+
+                <!-- Heatmap Table Mockup -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-center text-xs sm:text-sm border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
+                                <th class="p-3 text-left">行業類別 \ 時間</th>
+                                <th class="p-3">2020</th>
+                                <th class="p-3">2021</th>
+                                <th class="p-3">2022 (通膨高峰)</th>
+                                <th class="p-3">2023</th>
+                                <th class="p-3">2024</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr>
+                                <td class="p-3 text-left font-medium text-slate-800">電子零組件與資通訊業 (高 AI)</td>
+                                <td class="p-3 bg-emerald-100 text-emerald-800 font-bold">+3.2%</td>
+                                <td class="p-3 bg-emerald-200 text-emerald-900 font-bold">+4.5%</td>
+                                <td class="p-3 bg-emerald-300 text-emerald-950 font-bold">+3.8%</td>
+                                <td class="p-3 bg-emerald-200 text-emerald-900 font-bold">+2.9%</td>
+                                <td class="p-3 bg-emerald-200 text-emerald-900 font-bold">+3.4%</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-left font-medium text-slate-800">專業科學及技術服務業 (中 AI)</td>
+                                <td class="p-3 bg-emerald-50 text-emerald-700">+1.1%</td>
+                                <td class="p-3 bg-emerald-100 text-emerald-800 font-bold">+1.8%</td>
+                                <td class="p-3 bg-slate-100 text-slate-600">+0.2%</td>
+                                <td class="p-3 bg-emerald-100 text-emerald-800 font-bold">+1.2%</td>
+                                <td class="p-3 bg-emerald-100 text-emerald-800 font-bold">+1.5%</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-left font-medium text-slate-800">傳統製造業 (低 AI)</td>
+                                <td class="p-3 bg-emerald-50 text-emerald-700">+0.5%</td>
+                                <td class="p-3 bg-slate-100 text-slate-600">+0.1%</td>
+                                <td class="p-3 bg-rose-200 text-rose-900 font-bold">-1.8%</td>
+                                <td class="p-3 bg-rose-100 text-rose-800 font-bold">-0.9%</td>
+                                <td class="p-3 bg-slate-100 text-slate-600">+0.3%</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-left font-medium text-slate-800">住宿及餐飲業 (低 AI)</td>
+                                <td class="p-3 bg-rose-100 text-rose-800 font-bold">-1.2%</td>
+                                <td class="p-3 bg-rose-100 text-rose-800 font-bold">-0.8%</td>
+                                <td class="p-3 bg-rose-300 text-rose-950 font-bold">-2.5%</td>
+                                <td class="p-3 bg-rose-200 text-rose-900 font-bold">-1.4%</td>
+                                <td class="p-3 bg-rose-100 text-rose-800 font-bold">-0.5%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flex items-center justify-end space-x-2 text-xs text-slate-500 pt-2">
+                    <span>圖例：</span>
+                    <span class="inline-block w-4 h-4 bg-emerald-300 rounded"></span><span>高成長 (>3%)</span>
+                    <span class="inline-block w-4 h-4 bg-emerald-100 rounded"></span><span>正成長</span>
+                    <span class="inline-block w-4 h-4 bg-rose-100 rounded"></span><span>負成長</span>
+                    <span class="inline-block w-4 h-4 bg-rose-300 rounded"></span><span>嚴重受侵蝕 (&lt;-2%)</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 text-center text-xs">
+        <div class="max-w-7xl mx-auto px-4">
+            總體經濟學專題研究 | 數據來源：AREMOS 薪資與生產力資料庫、主計總處物價統計
+        </div>
+    </footer>
+
+    <!-- Chart.js Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const ctx = document.getElementById('dualYAxisChart').getContext('2d');
+
+            const years = ['2019', '2020', '2021', '2022', '2023', '2024'];
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: years,
+                    datasets: [
+                        {
+                            type: 'line',
+                            label: '高 AI 滲透率產業名目薪資年增率 (%)',
+                            data: [3.8, 3.2, 5.1, 6.2, 4.8, 5.5],
+                            borderColor: '#4f46e5',
+                            backgroundColor: '#4f46e5',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            yAxisID: 'y'
+                        },
+                        {
+                            type: 'line',
+                            label: '低 AI 滲透率產業名目薪資年增率 (%)',
+                            data: [1.8, 1.2, 1.5, 1.8, 1.6, 2.1],
+                            borderColor: '#e11d48',
+                            backgroundColor: '#e11d48',
+                            borderWidth: 3,
+                            borderDash: [5, 5],
+                            tension: 0.3,
+                            yAxisID: 'y'
+                        },
+                        {
+                            type: 'bar',
+                            label: 'CPI 年增率 (%)',
+                            data: [0.5, 0.2, 1.9, 2.9, 2.5, 1.8],
+                            backgroundColor: 'rgba(148, 163, 184, 0.35)',
+                            borderColor: 'rgba(148, 163, 184, 0.8)',
+                            borderWidth: 1,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: '薪資年增率 (%)',
+                                color: '#334155',
+                                font: { weight: 'bold' }
+                            },
+                            grid: {
+                                color: '#f1f5f9'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'CPI 年增率 (%)',
+                                color: '#64748b',
+                                font: { weight: 'bold' }
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 14,
+                                font: { family: 'Noto Sans TC' }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
