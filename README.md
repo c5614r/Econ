@@ -1,0 +1,83 @@
+try:
+        macro_df = get_fred_data(fred_key)
+        market_df = get_market_data()
+
+        # 第一區塊：核心總經 KPI 卡片
+        st.subheader("📊 關鍵總體經濟指標 (FRED)")
+        col1, col2, col3, col4 = st.columns(4)
+        
+        latest_cpi = macro_df["CPI 物價指數"].dropna().iloc[-1]
+        col1.metric("CPI 物價指數", f"{latest_cpi:.1f}")
+        
+        latest_rate = macro_df["10年期美債殖利率"].dropna().iloc[-1]
+        rate_prev = macro_df["10年期美債殖利率"].dropna().iloc[-2]
+        col2.metric("10年美債殖利率", f"{latest_rate:.2f}%", f"{latest_rate - rate_prev:+.2f}%")
+        
+        latest_unemp = macro_df["美國失業率"].dropna().iloc[-1]
+        col3.metric("美國失業率", f"{latest_unemp:.1f}%")
+        
+        latest_fed = macro_df["聯邦基金利率"].dropna().iloc[-1]
+        col4.metric("聯邦基金利率", f"{latest_fed:.2f}%")
+
+        st.write("---")
+
+        # 第二區塊：分頁儀表板
+        tab1, tab2, tab3 = st.tabs([
+            "📈 金融市場走勢 (yfinance)", 
+            "🏛️ 總體經濟趨勢 (FRED)", 
+            "📰 NLP 市場新聞與鷹鴿情緒分析"
+        ])
+        
+        # 頁籤 1: 金融市場
+        with tab1:
+            market_choice = st.selectbox("選擇金融市場標的：", market_df.columns)
+            fig1 = px.line(market_df, y=market_choice, title=f"{market_choice} 近一年走勢")
+            st.plotly_chart(fig1, use_container_width=True)
+            
+        # 頁籤 2: 總體經濟
+        with tab2:
+            macro_choice = st.selectbox("選擇總體經濟指標：", macro_df.columns)
+            fig2 = px.line(macro_df, y=macro_choice, title=f"{macro_choice} 近一年走勢")
+            st.plotly_chart(fig2, use_container_width=True)
+
+        # 頁籤 3: NLP 市場新聞與情緒分析
+        with tab3:
+            st.subheader("📰 即時財經新聞與 LLM 鷹鴿派情緒分析")
+            
+            search_kw = st.text_input("🔍 輸入新聞關鍵字 (預設: Federal Reserve Inflation):", value="Federal Reserve Inflation")
+            news_titles = fetch_google_news(search_kw)
+
+            nlp_col1, nlp_col2 = st.columns([1, 1])
+
+            with nlp_col1:
+                st.markdown("### 📌 最新財經新聞標題 (RSS)")
+                if news_titles:
+                    for i, title in enumerate(news_titles, 1):
+                        st.write(f"**{i}.** {title}")
+                else:
+                    st.warning("查無相關新聞標題，請嘗試更換關鍵字。")
+
+            with nlp_col2:
+                st.markdown("### 🤖 Gemini AI 鷹鴿派與情緒打分")
+                if gemini_key:
+                    if st.button("🚀 開始分析新聞市場情緒", type="primary"):
+                        if news_titles:
+                            with st.spinner("Gemini 正在剖析文本立場與鷹鴿情緒中..."):
+                                try:
+                                    news_text = "\n".join([f"- {t}" for t in news_titles])
+                                    prompt = f"你是一位專業總體經濟分析師。請分析以下 8 條新聞標題：\n{news_text}\n\n" \
+                                             f"請以繁體中文輸出結構化報告：\n" \
+                                             f"1. 整體市場情緒分數 (0~100)\n" \
+                                             f"2. 貨幣政策立場判定 (鷹派/鴿派/中立)\n" \
+                                             f"3. 重點分析與逐條評分表格 (Markdown Format)"
+                                    
+                                    # 使用最新 Gemini 3.5 Flash 模型
+                                    model = genai.GenerativeModel("gemini-3.5-flash")
+                                    response = model.generate_content(prompt)
+                                    st.markdown(response.text)
+                                except Exception as e:
+                                    st.error(f"AI 分析時發生錯誤: {e}")
+                        else:
+                            st.warning("尚無新聞數據可供分析。")
+                else:
+                    st.warning("👈 請在側邊欄輸入 Gemini API Key（或設定在 Secrets 中）以啟用 AI 文本情緒分析功能。")
